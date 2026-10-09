@@ -1,0 +1,25 @@
+# /etc/default/wg-peer-whitelist - all settings are optional.
+
+# Command that prints `wg show all dump`. Examples:
+#   local WireGuard:                 wg show all dump
+#   WireGuard in a Proxmox LXC (id 100):  pct exec 100 -- wg show all dump
+#   WireGuard on another host:       ssh -o BatchMode=yes root@wg-host wg show all dump
+#WGPW_WG_CMD="wg show all dump"
+
+# endpoints (public IPs the peers connect from) | allowed-ips | both
+#WGPW_SOURCE=endpoints
+
+# Only these interfaces (space/comma separated). Empty = all.
+#WGPW_INTERFACES="wg0"
+
+# Skip peers whose last handshake is older than N seconds (0 = keep all).
+#WGPW_MAX_HANDSHAKE_AGE=0
+
+# Static addresses that should always be whitelisted (space/comma separated).
+#WGPW_EXTRA="203.0.113.10 198.51.100.0/28"
+
+# parser (writes a whitelist parser YAML) | allowlist (cscli allowlists, experimental)
+#WGPW_BACKEND=parser
+#WGPW_OUTPUT=/etc/crowdsec/parsers/s02-enrich/zz-wg-peer-whitelist.yaml
+#WGPW_RELOAD_CMD="systemctl reload crowdsec"
+#WGPW_ALLOWLIST=wireguard-peers

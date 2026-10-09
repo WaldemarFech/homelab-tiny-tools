@@ -1,0 +1,16 @@
+[Unit]
+Description=Sync WireGuard peer IPs into the CrowdSec whitelist
+Documentation=https://github.com/WaldemarFech/homelab-tiny-tools/tree/main/crowdsec/wg-peer-whitelist
+After=network-online.target crowdsec.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Optional settings (WGPW_* variables), see README.
+EnvironmentFile=-/etc/default/wg-peer-whitelist
+ExecStart=/usr/local/sbin/wg-peer-whitelist
+# Hardening: the tool only needs to run `wg`, write one YAML file and reload crowdsec.
+PrivateTmp=yes
+# read-only (not "yes") so an ssh-based WGPW_WG_CMD can still read /root/.ssh
+ProtectHome=read-only
+NoNewPrivileges=yes
